@@ -5,8 +5,8 @@ import Button from '../Button';
 import { toast } from 'react-toastify';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getDoc, setDoc } from "firebase/firestore";
-import { auth, db, doc } from '../../firebase';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db, doc, provider } from '../../firebase';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -53,12 +53,14 @@ function SignupSigninComponent() {
     }
 
     async function createDoc(user) {
+        setLoading(true);
         if (!user) return
         const userRef = doc(db, "users", user.uid);
         const userData = await getDoc(userRef);
 
         if (userData.exists()) {
             toast.error('Documentation already exists');
+            setLoading(false);
         }
         else {
             try {
@@ -70,14 +72,17 @@ function SignupSigninComponent() {
                     createdAt: new Date(),
                 })
                 toast.success('Documentation created successfully');
+                setLoading(false);
                 
             } catch (error) {
                 toast.error(error.message);
+                setLoading(false);
             }
         }
     }
 
     function loginUsingEmail(e) {
+        setLoading(true);
         if (email !== "" && password !== "") {
             signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -91,12 +96,49 @@ function SignupSigninComponent() {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 toast.error("Invalid Credentials");
+                setLoading(false);
             });
         }
         else {
             toast.error('Please fill all the fields');
+            setLoading(false);
         }
     }    
+
+    function googleAuth() {
+        setLoading(true);
+        try {
+            signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                createDoc(user);
+                toast.success('Logged in successfully');
+                navigate("/dashboard");
+                setLoading(false);
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                toast.error('An error occurred');
+                setLoading(false);
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            });
+            
+        } catch (error) {
+            toast.error(error.message);
+            //setLoading(false);
+        }
+}
 
     return (
         <div className='signup-wrapper'>
@@ -149,6 +191,7 @@ function SignupSigninComponent() {
                 
                 <Button 
                     disabled={loading}
+                    onClick={googleAuth}
                     text={loading ? "Loading..." : login ? "Sign in with Google" : "Sign up with Google"} 
                     blue={true} 
                 />

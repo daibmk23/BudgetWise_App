@@ -1,0 +1,51 @@
+.input-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem;
+    width: 90%;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 6px;
+}
+
+.input-flex input{
+    width: 90%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+}
+
+.input-flex input:focus{
+    outline: none;
+}
+
+.select-input {
+    width: 10%;
+    margin-right: 10;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 30px 8px rgba(227, 227, 227, 0.75);
+    border-radius: 0.5rem !important;
+    padding: 0.2rem 0.5rem;
+  }
+  
+  .select-input-2 > div {
+    border-width: 0px !important;
+    border-bottom-width: 1px !important;
+    border-radius: 0 !important;
+    border-color: #000 !important;
+  }
+  
+  .select-input > div {
+    border: 0px solid #fff !important;
+  }
+
+ .btn {
+    display: inline-block; /* Allows button to size according to content */
+    width: auto; /* Prevents unnecessary stretching */
+    padding: 5px 10px;
+ }

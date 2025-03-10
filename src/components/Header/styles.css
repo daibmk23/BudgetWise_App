@@ -1,6 +1,6 @@
 .navbar {
     position: sticky;
-    width: 100%;
+    width: 105%;
     padding: 0.75rem 1rem;
     background-color: var(--theme);
     display: flex;
@@ -19,7 +19,7 @@
   .navbar-link {
     color: #e3e3e3;
     font-weight: 500;
-    margin: 0px 1.3rem 0px 0px;
+    margin: 0px 3rem 0px 0px;
     font-size: 1rem;
     cursor: pointer;
   }
@@ -28,3 +28,18 @@
     color: #fff;
     transition: all 0.3s;
   }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;  /* Align items in a row */
+    gap: 10px;  /* Space between profile pic & logout */
+}
+
+.navbar-avatar {
+    width: 35px; /* Adjust size */
+    height: 35px;
+    border-radius: 50%;  /* Makes it a circle */
+    object-fit: cover;
+    border: 2px solid white;
+    cursor: pointer;
+}

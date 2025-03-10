@@ -1,0 +1,27 @@
+.mycard{
+    box-shadow: 0px 0px 30px 8px rgba(227, 227, 227, 0.75);
+    margin: 2rem;
+    border-radius: 0.5rem;
+    min-width: 200px;
+    flex: 1;
+}
+
+.ant-card-head-title{
+   font-weight: 390px;
+}
+
+.mycard:hover{
+    border: 0.5px solid #000;
+    transition: 0.5s;
+}
+
+.myrow{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 2rem auto;
+    flex-wrap: wrap;
+    gap: 16px;
+}
